@@ -23,10 +23,29 @@ Background: movies have been added to database
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
   # enter step(s) to check the 'PG' and 'R' checkboxes
+  When I check the following ratings: PG, R
+  
   # enter step(s) to uncheck all other checkboxes
+  And I uncheck the following ratings: G, PG-13
+  
   # enter step to "submit" the search form on the homepage
+  # recall ratings_submit is the name of the submit button (from index.html.haml)
+  And I click 'ratings_submit'
+  
   # enter step(s) to ensure that PG and R movies are visible
+  Then I should see: Raiders of the Lost Ark, Amelie
+  
   # enter step(s) to ensure that other movies are not visible
+  And I should not see: Chicken Run, Chocolat
 
 Scenario: all ratings selected
-  # see assignment
+  When I check the following ratings: G, PG-13, PG, R
+  And I click 'ratings_submit'
+  Then I should see all of the movies
+  
+  
+  
+  
+  
+  
+  
