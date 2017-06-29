@@ -17,18 +17,28 @@ When /^I click '(.*)'/ do |button|
   click_button button
 end
 
+# copied from web_steps
+When /^(?:|I )follow "([^"]*)"$/ do |link|
+  click_link(link)
+end
+
 # Make sure that one string (regexp) occurs before or after another one
 #   on the same page
 
-Then /I should see '(.*)' before '(.*)'/ do |e1, e2|
+Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
   #  part 2.1
   # \s matches whitespace
   # \S matches anything but a whitespace
+  
+  # ############## this would probably be better ##########
   # expect(/[\s\S]*#{e1}[\s\S]*#{e2}/).to match(page.body)
-  a_match = /#{e1}[\s\S]#{e2}/m =~ page.body
-  assert !a_match.nil?
+  #########################################################
+  
+  
+  a_match = /[\s\S]*#{e1}[\s\S]*#{e2}/m =~ page.body
+  expect(a_match.nil?).to be false
   num_rows = 0
 end
 
