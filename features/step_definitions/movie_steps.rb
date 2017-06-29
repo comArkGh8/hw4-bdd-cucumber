@@ -28,18 +28,14 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
-  #  part 2.1
+  #  part 2.3
   # \s matches whitespace
   # \S matches anything but a whitespace
+  # a_match = /[\s\S]*#{e1}[\s\S]*#{e1}/ =~ page.body
+  # expect(a_match.nil?).to be false
   
-  # ############## this would probably be better ##########
-  # expect(/[\s\S]*#{e1}[\s\S]*#{e2}/).to match(page.body)
-  #########################################################
-  
-  
-  a_match = /[\s\S]*#{e1}[\s\S]*#{e2}/m =~ page.body
-  expect(a_match.nil?).to be false
-  num_rows = 0
+  #alternative
+  expect(/[\s\S]*#{e1}[\s\S]*#{e1}/).to match(page.body)
 end
 
 
